@@ -98,7 +98,7 @@ calculate("5 fact") == 120
 
 // Implement calculate([String]) and calculate(String)
 // to handle negative numbers
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -113,16 +113,61 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
- 
+
+
+
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
-/*
+
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    switch args.last {
+    case "avg":
+        if args.count == 1 {
+            return 0.0
+        }
+        var sum = 0.0;
+        for i in 0...(args.count - 1) {
+            sum += Double(args[i]) ?? 0
+        }
+        return sum / Double(args.count - 1)
+    case "fact":
+        if args.count == 1 {
+            return 0.0
+        }
+        let num = Double(args[0]) ?? 0
+        var index = 1.0
+        var total = 1.0
+        while index <= num {
+            total = total * index
+            index += 1.0
+        }
+        return total
+    case "count" :
+        return Double(args.count - 1)
+    default:
+        let num1 = Double(args[0]) ?? 0
+        let num2 = Double(args[2]) ?? 0
+        switch args[1] {
+        case "+":
+            return num1 + num2
+        case "-":
+            return num1 - num2
+        case "*":
+            return num1 * num2
+        case "/":
+            return num1 / num2
+        case "%":
+            return num1.truncatingRemainder(dividingBy: num2)
+        default:
+            return 0;
+            
+        }
+    }
 }
+
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    let args = arg.split(separator: " ").map({(subsequnce) in return String(subsequnce)})
+    return calculate(args)
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
@@ -132,4 +177,5 @@ calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
 calculate("1.0 2.0 3.0 4.0 5.0 count") == 5
-*/
+calculate("2.0 * 5.1") == 10.2
+let x : Double = calculate("2.1 + 2.5")
